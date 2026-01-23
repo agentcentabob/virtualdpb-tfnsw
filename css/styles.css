@@ -3,7 +3,10 @@
 /* tfnsw official colours sourced here: https://opendata.transport.nsw.gov.au/developers/resources
 ported from previous project with departure board */
 
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
+    --font-main: 'Public Sans';
     /* default colours */
     --black: #000000;
     --blue: #0000FF;
