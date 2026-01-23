@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departure Boards</title>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .board-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .board-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .board-card h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+
+        .board-card p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        .board-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚆 Departure Boards</h1>
+        <p class="subtitle">Alternative visualizations for Sydney public transport</p>
+
+        <div class="boards-grid">
+            <div class="board-card">
+                <a href="boards/default.html">
+                    <h2>Default Board</h2>
+                    <p>Standard departure display</p>
+                </a>
+            </div>
+
+            <!-- space to add more coards -->
+            <!-- 
+            <div class="board-card">
+                <a href="boards/minimal.html">
+                    <h2>Minimal</h2>
+                    <p>Clean, simple design</p>
+                </a>
+            </div>
+            -->
+        </div>
+    </div>
+</body>
+</html>

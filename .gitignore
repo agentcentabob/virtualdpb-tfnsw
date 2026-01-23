@@ -1,0 +1,17 @@
+# config file with API key
+js/config.js
+
+# OS files?
+.DS_Store
+Thumbs.db
+
+# editor files?
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# logs?
+*.log
+npm-debug.log*

@@ -1,0 +1,183 @@
+body {
+    margin: 0;
+    padding: 20px;
+    background: #1a1a2e;
+    color: #eee;
+    font-family: 'Courier New', monospace;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    background: #16213e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0 0 15px 0;
+    color: #ffa900;
+    font-size: 2em;
+}
+
+.back-link {
+    display: inline-block;
+    color: #ffa900;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#stopInput {
+    flex: 1;
+    padding: 10px;
+    background: #0f3460;
+    border: 2px solid #ffa900;
+    color: #eee;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #ffa900;
+    border: none;
+    color: #1a1a2e;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button:hover {
+    background: #ffb800;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.status {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #aaa;
+    min-height: 20px;
+}
+
+.board {
+    background: #16213e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.board-header {
+    display: grid;
+    grid-template-columns: 80px 100px 1fr 100px 120px;
+    gap: 10px;
+    padding: 15px 20px;
+    background: #0f3460;
+    font-weight: bold;
+    color: #ffa900;
+    border-bottom: 2px solid #ffa900;
+}
+
+.departures-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.departure-row {
+    display: grid;
+    grid-template-columns: 80px 100px 1fr 100px 120px;
+    gap: 10px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #0f3460;
+    animation: fadeIn 0.3s ease;
+}
+
+.departure-row:hover {
+    background: #0f3460;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.col-time {
+    font-weight: bold;
+    color: #ffa900;
+}
+
+.col-line {
+    background: #ffa900;
+    color: #1a1a2e;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+}
+
+.col-destination {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.col-platform {
+    text-align: center;
+    color: #aaa;
+}
+
+.col-status {
+    text-align: right;
+}
+
+.status-ontime {
+    color: #4caf50;
+}
+
+.status-delayed {
+    color: #ff5252;
+}
+
+.status-soon {
+    color: #ffa900;
+    font-weight: bold;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+    font-size: 1.1em;
+}
+
+.loading {
+    color: #ffa900;
+}
+
+.error {
+    color: #ff5252;
+}
