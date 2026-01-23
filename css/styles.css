@@ -1,0 +1,93 @@
+/* common styles */
+
+/* tfnsw official colours sourced here: https://opendata.transport.nsw.gov.au/developers/resources
+ported from previous project with departure board */
+
+:root {
+    /* default colours */
+    --black: #000000;
+    --blue: #0000FF;
+    --red: #FF0000;
+    --green: #00FF00;
+    --cyan: #00FFFF;
+    --magenta: #FF00FF;
+    --yellow: #FFFF00;
+    --white: #FFFFFF;
+    --orange: #FF6600;
+    --dark-gray: #555555;
+
+    /* time status colours from tripview */
+    --early: #0074CE;
+    --ontime: #2DA131;
+    --minor: #F38C27;
+    --major: #BD111F;
+
+    /* official rail colours */
+    --t1: #F99D1C;
+    --t2: #0098CD;
+    --t3: #F37021;
+    --t4: #005AA3;
+    --t5: #C4258F;
+    --t6: #7C3E21;
+    --t7: #6F818E;
+    --t8: #00954C;
+    --t9: #D11F2F;
+    --hunter: #833134;
+    --regional: #F6891F;
+    --coaches: #732A82;
+
+    /* official ferry colours */
+    --f1: #00774B;
+    --f2: #144734;
+    --f3: #648C3C;
+    --f4: #BFD730;
+    --f5: #286142;
+    --f6: #00AB51;
+    --f7: #00B189;
+    --f8: #55622B;
+    --f9: #65B32E;
+    --stockton: #5AB031;
+
+    /* official light rail colours */
+    --l1: #BE1622;
+    --l2: #DD1E25;
+    --l3: #781140;
+    --l4: #BB2043;
+    --nlr: #EE343F;
+
+    /* official modal colours */
+    --metro: #168388;
+    --sydneytrains: #EC6606;
+    --nswtl: #DD3F1D;
+    --bus: #009ED7;
+    --lightrail: #E4022D;
+    --ferry: #009E4D;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* default scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffa900;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffb800;
+}
