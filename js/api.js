@@ -1,45 +1,16 @@
-import CONFIG from './config.js';
+// TfNSW API interaction module
+// Calls our Flask backend
 
 class TfNSWAPI {
     constructor() {
-        this.apiKey = CONFIG.API_KEY;
-        this.baseUrl = CONFIG.API_BASE_URL;
+        // Point to our Flask backend on port 5000
+        this.backendUrl = '/api';
     }
 
-    // get departures from a stop
+    // Get departures from a stop
     async getDepartures(stopId, options = {}) {
-        const {
-            outputFormat = 'rapidJSON',
-            coordOutputFormat = 'EPSG:4326',
-            mode = 'direct',
-            depArrMacro = 'dep',
-            itdDate = this.getCurrentDate(),
-            itdTime = this.getCurrentTime(),
-            TfNSWTR = 'true'
-        } = options;
-
-        const params = new URLSearchParams({
-            outputFormat,
-            coordOutputFormat,
-            mode,
-            type_dm: 'stop',
-            name_dm: stopId,
-            depArrMacro,
-            itdDate,
-            itdTime,
-            TfNSWTR
-        });
-
-        // using CORS proxy for development
-        const corsProxy = 'https://corsproxy.io/?';
-        const apiUrl = `${this.baseUrl}/departure_mon?${params}`;
-
         try {
-            const response = await fetch(`${corsProxy}${encodeURIComponent(apiUrl)}`, {
-                headers: {
-                    'Authorization': `apikey ${this.apiKey}`
-                }
-            });
+            const response = await fetch(`${this.backendUrl}/departures?stop_id=${stopId}`);
 
             if (!response.ok) {
                 throw new Error(`API Error: ${response.status}`);
@@ -53,7 +24,7 @@ class TfNSWAPI {
         }
     }
 
-    // parse the TfNSW departure response
+    // Parse the TfNSW departure response
     parseDepartureData(data) {
         const departures = [];
         
@@ -79,14 +50,14 @@ class TfNSWAPI {
         return departures;
     }
 
-    // calculate delay in minutes
+    // Calculate delay in minutes
     calculateDelay(planned, estimated) {
         const plannedTime = new Date(planned);
         const estimatedTime = new Date(estimated);
         return Math.round((estimatedTime - plannedTime) / 60000);
     }
 
-    // get current date in YYYYMMDD format
+    // Get current date in YYYYMMDD format
     getCurrentDate() {
         const now = new Date();
         const year = now.getFullYear();
@@ -95,7 +66,7 @@ class TfNSWAPI {
         return `${year}${month}${day}`;
     }
 
-    // get current time in HHMM format
+    // Get current time in HHMM format
     getCurrentTime() {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
@@ -103,7 +74,7 @@ class TfNSWAPI {
         return `${hours}${minutes}`;
     }
 
-    // format time for display
+    // Format time for display
     formatTime(datetime) {
         const date = new Date(datetime);
         return date.toLocaleTimeString('en-AU', { 
@@ -113,7 +84,7 @@ class TfNSWAPI {
         });
     }
 
-    // get minutes until departure
+    // Get minutes until departure
     getMinutesUntil(datetime) {
         const now = new Date();
         const departure = new Date(datetime);

@@ -1,17 +1,14 @@
-# config file with API key
-js/config.js
+.env
 
-# OS files?
+# other stuff
 .DS_Store
 Thumbs.db
 
-# editor files?
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# logs?
 *.log
 npm-debug.log*
