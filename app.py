@@ -16,7 +16,7 @@ API_BASE_URL = 'https://api.transport.nsw.gov.au/v1/tp'
 
 @app.route("/")
 def home():
-    return render_template("/templates/index.html")
+    return render_template("index.html")
 
 
 @app.route("/design/<board_name>")

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starter Departure Board</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/design/starter.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/" class="back-link">← Back</a>
+            <h1>Departure Board</h1>
+            <div class="controls">
+                <input type="text" id="stopInput" placeholder="Enter Stop ID" />
+                <button id="loadBtn">Load Departures</button>
+                <button id="refreshBtn">Refresh</button>
+            </div>
+            <div class="status" id="status"></div>
+        </header>
+
+        <div class="board">
+            <div class="board-header">
+                <div class="col-time">Time</div>
+                <div class="col-line">Line</div>
+                <div class="col-destination">Destination</div>
+                <div class="col-platform">Platform</div>
+                <div class="col-status">Status</div>
+            </div>
+            <div id="departures" class="departures-list">
+                <!-- departures will be inserted here -->
+            </div>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <p>Enter a stop ID and click "Load Departures" to begin</p>
+        </div>
+    </div>
+
+    <script type="module" src="/static/js/design/starter.js"></script>
+</body>
+</html>

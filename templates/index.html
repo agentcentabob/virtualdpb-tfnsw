@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Departure Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Virtual Departure Boards</h1>
+        <p class="subtitle">Alternative public transport departure boards designs with live data</p>
+
+        <div class="boards-grid">
+            <div class="board-card">
+                <a href="/design/starter">
+                    <h2>Starter Board</h2>
+                    <p><i>Vibe coded</i></p>
+                </a>
+            </div>
+
+        <div class="board-card">
+                <a href="/design/starter">
+                    <h2>Second Board</h2>
+                    <p>Attempted recreation of the standard trains board</p>
+                </a>
+        </div>
+        </div>
+    </div>
+</body>
+<footer>made by jorteh :)</footer>
+</html>
