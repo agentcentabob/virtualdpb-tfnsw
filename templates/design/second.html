@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starter Departure Board</title>
+    <title>Departure Board</title>
     <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet" href="/static/css/design/starter.css">
+    <link rel="stylesheet" href="/static/css/design/second.css">
 </head>
 <body>
     <div class="container">
         <header>
             <a href="/" class="back-link">← Back</a>
             <h1>Departure Board</h1>
+            <div class="station-info" id="stationInfo" style="display: none;">
+                <span id="stationName"></span>
+                <span id="stationId"></span>
+            </div>
             <div class="controls">
-                <input type="text" id="stopInput" placeholder="Enter Stop ID" />
+                <div class="search-container">
+                    <input type="text" id="stopInput" placeholder="Search station by name or enter Stop ID" />
+                    <div id="suggestions" class="suggestions-dropdown"></div>
+                </div>
                 <button id="loadBtn">Load Departures</button>
                 <button id="refreshBtn">Refresh</button>
             </div>
@@ -34,10 +41,10 @@
         </div>
 
         <div class="empty-state" id="emptyState">
-            <p>Enter a stop ID and click "Load Departures" to begin</p>
+            <p>Enter a stop ID or search for a station and click "Load Departures" to begin</p>
         </div>
     </div>
 
-    <script type="module" src="/static/js/design/starter.js"></script>
+    <script type="module" src="/static/js/design/second.js"></script>
 </body>
 </html>

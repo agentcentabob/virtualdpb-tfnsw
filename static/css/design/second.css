@@ -19,13 +19,28 @@ header {
 
 header h1 {
     margin: 0 0 15px 0;
-    color: #ffa900;
+    color: #fff;
     font-size: 2em;
+}
+
+.station-info {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #fff;
+}
+
+#stationName {
+    font-weight: bold;
+}
+
+#stationId {
+    color: #aaa;
+    margin-left: 10px;
 }
 
 .back-link {
     display: inline-block;
-    color: #ffa900;
+    color: #fff;
     text-decoration: none;
     margin-bottom: 10px;
     font-size: 1.1em;
@@ -41,19 +56,63 @@ header h1 {
     margin-bottom: 10px;
 }
 
-#stopInput {
+.search-container {
     flex: 1;
+    position: relative;
+}
+
+#stopInput {
+    width: 100%;
     padding: 10px;
     background: #0f3460;
-    border: 2px solid #ffa900;
+    border: 2px solid #fff;
     color: #eee;
     font-size: 1em;
     border-radius: 5px;
 }
 
+.suggestions-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #0f3460;
+    border: 2px solid #fff;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #16213e;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.suggestion-item:hover {
+    background: #16213e;
+}
+
+.stop-name {
+    flex: 1;
+    color: #eee;
+}
+
+.stop-id {
+    color: #aaa;
+    font-size: 0.85em;
+    margin-left: 10px;
+}
+
 button {
     padding: 10px 20px;
-    background: #ffa900;
+    background: #fff;
     border: none;
     color: #1a1a2e;
     font-weight: bold;
@@ -63,7 +122,7 @@ button {
 }
 
 button:hover {
-    background: #ffb800;
+    background: --ontime;
 }
 
 button:active {
@@ -90,8 +149,8 @@ button:active {
     padding: 15px 20px;
     background: #0f3460;
     font-weight: bold;
-    color: #ffa900;
-    border-bottom: 2px solid #ffa900;
+    color: #fff;
+    border-bottom: 2px solid #777;
 }
 
 .departures-list {
@@ -125,11 +184,34 @@ button:active {
 
 .col-time {
     font-weight: bold;
-    color: #ffa900;
+    color: #fff;
+}
+
+.time-mins {
+    display: block;
+    font-size: 1em;
+}
+
+.time-delay {
+    display: block;
+    font-size: 0.85em;
+    margin-top: 2px;
+}
+
+.delay-ontime {
+    color: var(--ontime);
+}
+
+.delay-minor {
+    color: var(--minor);
+}
+
+.delay-major {
+    color: var(--major);
 }
 
 .col-line {
-    background: #ffa900;
+    background: #fff;
     color: #1a1a2e;
     padding: 5px 10px;
     border-radius: 5px;
@@ -141,12 +223,26 @@ button:active {
 .col-destination {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.destination-main {
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination-info {
+    font-size: 0.8em;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
 }
 
 .col-platform {
     text-align: center;
-    color: #aaa;
+    color: #fff;
 }
 
 .col-status {
@@ -154,16 +250,15 @@ button:active {
 }
 
 .status-ontime {
-    color: #4caf50;
+    color: var(--ontime);
 }
 
 .status-delayed {
-    color: #ff5252;
+    color: var(--major);
 }
 
 .status-soon {
-    color: #ffa900;
-    font-weight: bold;
+    color: var(--minor);
 }
 
 .empty-state {
@@ -171,12 +266,14 @@ button:active {
     padding: 60px 20px;
     color: #aaa;
     font-size: 1.1em;
+    font-style: italic;
 }
 
 .loading {
-    color: #ffa900;
+    color: var(--l-gray);
+    font-style: italic;
 }
 
 .error {
-    color: #ff5252;
+    color: var(--major);
 }

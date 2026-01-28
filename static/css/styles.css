@@ -8,7 +8,6 @@ ported from previous project with departure board */
 :root {
     --font-main: 'Public Sans';
     /* default colours */
-    --black: #000000;
     --blue: #0000FF;
     --red: #FF0000;
     --green: #00FF00;
@@ -18,6 +17,7 @@ ported from previous project with departure board */
     --white: #FFFFFF;
     --orange: #FF6600;
     --dark-gray: #555555;
+    --l-gray: #999999;
 
     /* time status colours from tripview */
     --early: #0074CE;

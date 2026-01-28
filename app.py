@@ -67,6 +67,66 @@ def get_departures():
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/api/stops', methods=['GET'])
+def get_stops():
+    """Get all available stops for searching"""
+    search_query = request.args.get('q', '').strip()
+
+    sydney_tz = pytz.timezone('Australia/Sydney')
+    now = datetime.now(sydney_tz)
+    itd_date = now.strftime('%Y%m%d')
+    itd_time = now.strftime('%H%M')
+
+    params = {
+        'outputFormat': 'rapidJSON',
+        'coordOutputFormat': 'EPSG:4326',
+        'mode': 'direct',
+        'type_dm': 'stop',
+        'name_dm': search_query if search_query else '%',
+        'depArrMacro': 'dep',
+        'itdDate': itd_date,
+        'itdTime': itd_time,
+        'TfNSWTR': 'true',
+        'maxItems': 50
+    }
+
+    headers = {
+        'Authorization': f'apikey {API_KEY}'
+    }
+
+    try:
+        response = requests.get(
+            f'{API_BASE_URL}/departure_mon',
+            params=params,
+            headers=headers
+        )
+        response.raise_for_status()
+        data = response.json()
+
+        stops = []
+        seen = set()
+
+        # Extract stops from stopEvents
+        if data.get('stopEvents'):
+            for event in data['stopEvents']:
+                # Get stop info from location
+                stop_location = event.get('location', {})
+                stop_id = stop_location.get('id')
+                stop_name = stop_location.get('name', '')
+
+                if stop_id and stop_name and stop_id not in seen:
+                    seen.add(stop_id)
+                    stops.append({
+                        'id': stop_id,
+                        'name': stop_name
+                    })
+
+        return jsonify({'stops': stops})
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({'status': 'ok'})
