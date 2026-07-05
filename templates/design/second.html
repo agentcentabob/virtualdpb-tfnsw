@@ -23,6 +23,14 @@
                 </div>
                 <button id="loadBtn">Load Departures</button>
                 <button id="refreshBtn">Refresh</button>
+                <select id="modeFilter" title="feature not yet available">
+                    <option value="all">All Modes</option>
+                    <option value="train">Train</option>
+                    <option value="bus">Bus</option>
+                    <option value="ferry">Ferry</option>
+                    <option value="lightrail">Light Rail</option>
+                    <option value="metro">Metro</option>
+                </select>
             </div>
             <div class="status" id="status"></div>
         </header>
@@ -33,7 +41,6 @@
                 <div class="col-line">Line</div>
                 <div class="col-destination">Destination</div>
                 <div class="col-platform">Platform</div>
-                <div class="col-status">Status</div>
             </div>
             <div id="departures" class="departures-list">
                 <!-- departures will be inserted here -->

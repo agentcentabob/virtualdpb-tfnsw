@@ -6,6 +6,7 @@ class DepartureBoard {
         this.stopName = null;
         this.refreshInterval = null;
         this.searchTimeout = null;
+        this.allDepartures = []; // store all fetched departures
         this.init();
     }
 
@@ -14,6 +15,7 @@ class DepartureBoard {
         this.stopInput = document.getElementById('stopInput');
         this.loadBtn = document.getElementById('loadBtn');
         this.refreshBtn = document.getElementById('refreshBtn');
+        this.modeFilterEl = document.getElementById('modeFilter');
         this.departuresEl = document.getElementById('departures');
         this.emptyStateEl = document.getElementById('emptyState');
         this.statusEl = document.getElementById('status');
@@ -25,7 +27,8 @@ class DepartureBoard {
         // set up event listeners
         this.loadBtn.addEventListener('click', () => this.loadDepartures());
         this.refreshBtn.addEventListener('click', () => this.refresh());
-        
+        this.modeFilterEl.addEventListener('change', () => this.renderDepartures());
+
         // add search functionality
         this.stopInput.addEventListener('input', (e) => this.handleSearch(e));
         this.stopInput.addEventListener('keypress', (e) => {
@@ -50,7 +53,7 @@ class DepartureBoard {
 
     async handleSearch(e) {
         const query = e.target.value.trim();
-        
+
         if (query.length < 2) {
             this.suggestionsEl.style.display = 'none';
             return;
@@ -95,7 +98,7 @@ class DepartureBoard {
 
     async loadDepartures() {
         const inputValue = this.stopInput.value.trim();
-        
+
         if (!inputValue) {
             this.showStatus('Please enter a stop ID or search for a station', 'error');
             return;
@@ -112,9 +115,9 @@ class DepartureBoard {
         }
 
         localStorage.setItem('lastStopId', this.stopId);
-        
+
         await this.fetchAndDisplay();
-        
+
         // set up auto-refresh every 30 seconds
         if (this.refreshInterval) {
             clearInterval(this.refreshInterval);
@@ -133,25 +136,26 @@ class DepartureBoard {
 
         try {
             const departures = await api.getDepartures(this.stopId);
-            
+            console.log('Fetched departures:', departures.length, departures);
+            this.allDepartures = departures;
+
             if (departures.length === 0) {
-                this.departuresEl.innerHTML = '';
-                this.emptyStateEl.style.display = 'block';
-                this.emptyStateEl.innerHTML = '<p>No departures found for this stop</p>';
+                // Show message in departures area
+                this.departuresEl.innerHTML = '<p class="no-departures">No departures found. Check the modal filter, stop id or selected date.</p>';
                 this.showStatus('No departures found', 'error');
                 this.displayStationInfo();
                 return;
             }
 
-            this.renderDepartures(departures);
+            this.renderDepartures();
             this.displayStationInfo();
-            const now = new Date().toLocaleTimeString('en-AU', { 
-                hour: '2-digit', 
+            const now = new Date().toLocaleTimeString('en-AU', {
+                hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
             });
             this.showStatus(`Last updated: ${now}`, '');
-            
+
         } catch (error) {
             console.error('Error:', error);
             this.showStatus('Error loading departures. Check console for details.', 'error');
@@ -172,58 +176,95 @@ class DepartureBoard {
         }
     }
 
-    renderDepartures(departures) {
-        this.departuresEl.innerHTML = '';
-
-        departures.forEach(dep => {
-            const row = document.createElement('div');
-            row.className = 'departure-row';
-
-            const minsUntil = api.getMinutesUntil(dep.departureTime);
-            
-            // Format time display: "mins until" in white, then "[delay]" in colored brackets
-            let timeDisplay = '';
-            if (minsUntil <= 2) {
-                timeDisplay = '<span class="time-mins">NOW</span>';
-            } else {
-                timeDisplay = `<span class="time-mins">${minsUntil} min</span>`;
-            }
-
-            // Add delay in brackets with appropriate color
-            if (dep.delay > 0) {
-                let delayClass = 'delay-minor';
-                if (dep.delay >= 3) {
-                    delayClass = 'delay-major';
-                }
-                timeDisplay += ` <span class="time-delay ${delayClass}">[+${dep.delay}]</span>`;
-            } else if (minsUntil > 2) {
-                timeDisplay += ` <span class="time-delay delay-ontime">[on time]</span>`;
-            }
-
-            // Get short line name
-            const shortLine = api.getShortLineName(dep.line);
-            const lineColor = api.getLineColor(dep.line);
-            const lineStyle = `background-color: ${lineColor}; color: ${this.getContrastedTextColor(lineColor)};`;
-
-            // Get short platform
-            const shortPlatform = api.getShortPlatform(dep.platform);
-
-            // Fleet type and stopping pattern info
-            const fleetInfo = dep.fleetType ? ` • ${dep.fleetType}` : '';
-            const stoppingInfo = dep.stoppingPattern ? ` • ${dep.stoppingPattern}` : '';
-
-            row.innerHTML = `
-                <div class="col-time">${timeDisplay}</div>
-                <div class="col-line" style="${lineStyle}">${this.escapeHtml(shortLine)}</div>
-                <div class="col-destination">
-                    <div class="destination-main">${this.escapeHtml(dep.destination)}</div>
-                    <div class="destination-info">${fleetInfo}${stoppingInfo}</div>
-                </div>
-                <div class="col-platform">${shortPlatform}</div>
-            `;
-
-            this.departuresEl.appendChild(row);
+    // Return departures filtered by selected mode
+    getFilteredDepartures() {
+        if (!this.allDepartures) return [];
+        const filter = this.modeFilterEl ? this.modeFilterEl.value : 'all';
+        if (filter === 'all') return this.allDepartures;
+        return this.allDepartures.filter(dep => {
+            const mode = (dep.mode ?? '').toString().toLowerCase();
+            return mode === filter;
         });
+    }
+
+    // Return platform label with appropriate prefix based on mode
+    getPlatformLabel(dep) {
+        const shortPlatform = api.getShortPlatform(dep.platform);
+        if (!shortPlatform) return '-';
+        const mode = (dep.mode ?? '').toString().toLowerCase();
+        if (mode === 'bus') {
+            return `stand ${shortPlatform}`;
+        } else if (mode === 'ferry') {
+            return `wharf ${shortPlatform}`;
+        } else if (mode === 'lightrail') {
+            return `stop ${shortPlatform}`;
+        }
+        // for other modes (train, metro, etc.) just return the platform/shortPlatform
+        return shortPlatform;
+    }
+
+    renderDepartures(departuresToRender = this.getFilteredDepartures()) {
+        try {
+            console.log('Rendering departures:', departuresToRender.length);
+            if (departuresToRender.length === 0) {
+                this.departuresEl.innerHTML = '<p class="no-departures">No departures found. Check the modal filter, stop id or selected date.</p>';
+                return;
+            }
+            this.departuresEl.innerHTML = '';
+
+            departuresToRender.forEach(dep => {
+                const row = document.createElement('div');
+                row.className = 'departure-row';
+
+                const minsUntil = api.getMinutesUntil(dep.departureTime);
+
+                // Format time display: "mins until" in white, then "[delay]" in colored brackets
+                let timeDisplay = '';
+                if (minsUntil <= 2) {
+                    timeDisplay = '<span class="time-mins">NOW</span>';
+                } else {
+                    timeDisplay = `<span class="time-mins">${minsUntil} min</span>`;
+                }
+
+                // Add delay in brackets with appropriate color
+                if (dep.delay > 0) {
+                    let delayClass = 'delay-minor';
+                    if (dep.delay >= 3) {
+                        delayClass = 'delay-major';
+                    }
+                    timeDisplay += ` <span class="time-delay ${delayClass}">[+${dep.delay}]</span>`;
+                } else if (minsUntil > 2) {
+                    timeDisplay += ` <span class="time-delay delay-ontime">[on time]</span>`;
+                }
+
+                // Get short line name
+                const shortLine = api.getShortLineName(dep.line);
+                const lineColor = api.getLineColor(dep.line);
+                const lineStyle = `background-color: ${lineColor}; color: ${this.getContrastedTextColor(lineColor)}; border-radius:4px; padding:2px 6px;`;
+
+                // Get platform label with prefix
+                const platformLabel = this.getPlatformLabel(dep);
+
+                // Fleet type and stopping pattern info (italic, no bullet)
+                const fleetInfo = dep.fleetType ? ` ${dep.fleetType}` : '';
+                const stoppingInfo = dep.stoppingPattern ? ` ${dep.stoppingPattern}` : '';
+
+                row.innerHTML = `
+                    <div class="col-time">${timeDisplay}</div>
+                    <div class="col-line" style="${lineStyle}">${this.escapeHtml(shortLine)}</div>
+                    <div class="col-destination">
+                        <div class="destination-main">${this.escapeHtml(dep.destination)}</div>
+                        <div class="destination-info" style="font-style:italic;">${fleetInfo}${stoppingInfo}</div>
+                    </div>
+                    <div class="col-platform">${platformLabel}</div>
+                `;
+
+                this.departuresEl.appendChild(row);
+            });
+        } catch (e) {
+            console.error('Error rendering departures:', e);
+            this.departuresEl.innerHTML = '<p>Error rendering departures</p>';
+        }
     }
 
     getContrastedTextColor(hexColor) {
@@ -231,10 +272,10 @@ class DepartureBoard {
         const r = parseInt(hexColor.slice(1, 3), 16);
         const g = parseInt(hexColor.slice(3, 5), 16);
         const b = parseInt(hexColor.slice(5, 7), 16);
-        
+
         // Calculate luminance
         const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        
+
         // Return white or black based on luminance
         return luminance > 0.5 ? '#000000' : '#ffffff';
     }

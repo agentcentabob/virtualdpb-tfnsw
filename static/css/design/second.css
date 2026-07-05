@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 20px;
-    background: #1a1a2e;
+    background: #000;
     color: #eee;
 }
 
@@ -19,14 +19,14 @@ header {
 
 header h1 {
     margin: 0 0 15px 0;
-    color: #fff;
+    color: var(--white);
     font-size: 2em;
 }
 
 .station-info {
     margin-bottom: 15px;
     font-size: 1.1em;
-    color: #fff;
+    color: var(--white);
 }
 
 #stationName {
@@ -34,13 +34,13 @@ header h1 {
 }
 
 #stationId {
-    color: #aaa;
+    color: var(--l-gray);
     margin-left: 10px;
 }
 
 .back-link {
     display: inline-block;
-    color: #fff;
+    color: var(--white);
     text-decoration: none;
     margin-bottom: 10px;
     font-size: 1.1em;
@@ -54,10 +54,12 @@ header h1 {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .search-container {
     flex: 1;
+    min-width: 200px;
     position: relative;
 }
 
@@ -65,7 +67,7 @@ header h1 {
     width: 100%;
     padding: 10px;
     background: #0f3460;
-    border: 2px solid #fff;
+    border: 2px solid var(--white);
     color: #eee;
     font-size: 1em;
     border-radius: 5px;
@@ -78,7 +80,7 @@ header h1 {
     left: 0;
     right: 0;
     background: #0f3460;
-    border: 2px solid #fff;
+    border: 2px solid var(--white);
     border-top: none;
     border-radius: 0 0 5px 5px;
     max-height: 250px;
@@ -105,14 +107,14 @@ header h1 {
 }
 
 .stop-id {
-    color: #aaa;
+    color: var(--l-gray);
     font-size: 0.85em;
     margin-left: 10px;
 }
 
 button {
     padding: 10px 20px;
-    background: #fff;
+    background: var(--white);
     border: none;
     color: #1a1a2e;
     font-weight: bold;
@@ -122,7 +124,7 @@ button {
 }
 
 button:hover {
-    background: --ontime;
+    background: var(--ontime);
 }
 
 button:active {
@@ -132,25 +134,45 @@ button:active {
 .status {
     margin-top: 10px;
     font-size: 0.9em;
-    color: #aaa;
+    color: var(--l-gray);
     min-height: 20px;
 }
 
+/* Filter select */
+#modeFilter {
+    padding: 10px 20px;
+    background: var(--white);
+    border: 1px solid var(--l-gray);
+    border-radius: 5px;
+    font-size: 1em;
+    color: #1a1a2e;
+    cursor: pointer;
+}
+
+/* Make filter red and italic as requested (feature not yet available) */
+#modeFilter {
+    color: red;
+    font-style: italic;
+}
+
+/* Tooltip already set via title attribute */
+
 .board {
-    background: #16213e;
+    background: var(--white);
     border-radius: 10px;
     overflow: hidden;
 }
 
 .board-header {
     display: grid;
-    grid-template-columns: 80px 100px 1fr 100px 120px;
+    grid-template-columns: 80px 100px 1fr 100px;
     gap: 10px;
     padding: 15px 20px;
-    background: #0f3460;
+    background: var(--dark-gray);
     font-weight: bold;
-    color: #fff;
-    border-bottom: 2px solid #777;
+    color: var(--white);
+    border-bottom: 2px solid var(--l-gray);
+    text-transform: uppercase;
 }
 
 .departures-list {
@@ -160,15 +182,39 @@ button:active {
 
 .departure-row {
     display: grid;
-    grid-template-columns: 80px 100px 1fr 100px 120px;
-    gap: 10px;
+    grid-template-columns: 80px 100px 1fr 100px;
+    gap: 0 10px; /* row-gap 0, column-gap 10px */
     padding: 15px 20px;
-    border-bottom: 1px solid #0f3460;
+    background: var(--white);
+    color: #000;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 0; /* remove vertical space between rows */
     animation: fadeIn 0.3s ease;
 }
 
 .departure-row:hover {
-    background: #0f3460;
+    background: #f5f5f5;
+}
+
+.departure-row .col-time {
+    color: #000;
+    font-weight: bold;
+}
+.departure-row .col-line {
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+.departure-row .col-destination {
+    color: #000;
+}
+.departure-row .col-platform {
+    color: #000;
+    text-align: center;
 }
 
 @keyframes fadeIn {
@@ -184,7 +230,7 @@ button:active {
 
 .col-time {
     font-weight: bold;
-    color: #fff;
+    color: var(--white);
 }
 
 .time-mins {
@@ -211,10 +257,6 @@ button:active {
 }
 
 .col-line {
-    background: #fff;
-    color: #1a1a2e;
-    padding: 5px 10px;
-    border-radius: 5px;
     font-weight: bold;
     text-align: center;
     width: fit-content;
@@ -233,38 +275,32 @@ button:active {
 
 .destination-info {
     font-size: 0.8em;
-    color: #aaa;
+    color: var(--l-gray);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 2px;
+    font-style: italic;
 }
 
 .col-platform {
     text-align: center;
-    color: #fff;
+    color: var(--white);
 }
 
-.col-status {
-    text-align: right;
-}
-
-.status-ontime {
-    color: var(--ontime);
-}
-
-.status-delayed {
-    color: var(--major);
-}
-
-.status-soon {
-    color: var(--minor);
+/* No departures message */
+.no-departures {
+    text-align: center;
+    color: var(--dark-gray);
+    font-style: italic;
+    padding: 20px;
+    margin: 0;
 }
 
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    color: #aaa;
+    color: var(--l-gray);
     font-size: 1.1em;
     font-style: italic;
 }

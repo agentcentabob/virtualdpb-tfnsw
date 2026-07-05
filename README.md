@@ -1,7 +1,23 @@
 # virtualdpb-tfnsw
-creating alternative departure board designs digitally to those used on sydney trains and metro. *using ai to help me turn my idea into a functional app.
+creating alternative departure board designs digitally to those used on sydney trains and metro.
+
+**notice: collaborating with integrated free claude code to help me turn my idea into a functional app. i don't condone the use of generative ai!!*
+
+reused and adopted for my design and technology student negotiated project with a focus on design.
 
 #### project to do list
 - [x] make functionality
 - [ ] make alternative metro design
 - [ ] convert station name to id for search
+- [ ] resolve flask not running in correct environment
+- [ ] make final improvements to modern board
+    - [ ] show via text in different size
+    - [ ] change display of operator
+    - [ ] make on time show when service is departing
+    - [ ] change line box to show at correct size
+    - [ ] fix search feature to search by name, not id
+    - [ ] add modal filter
+    - [ ] fix spacing with stop id and name
+    - [ ] fix scroll bar
+    - [ ] show 'last updated' subtext in italics and 24h time
+    - [ ] verify claude changes

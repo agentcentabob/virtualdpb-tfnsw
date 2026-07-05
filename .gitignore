@@ -1,14 +1,17 @@
+# tfnsw api key
 .env
 
-# other stuff
-.DS_Store
-Thumbs.db
+# claude ai 
+fccsetup.md
+CLAUDE.md
 
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-*.log
-npm-debug.log*
+# other (unused)
+##.DS_Store
+##Thumbs.db
+##.vscode/
+##.idea/
+##*.swp
+##*.swo
+##*~
+##*.log
+##npm-debug.log*

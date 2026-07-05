@@ -27,7 +27,7 @@ class TfNSWAPI {
     // Parse the TfNSW departure response
     parseDepartureData(data) {
         const departures = [];
-        
+
         if (!data.stopEvents) {
             return departures;
         }
@@ -39,7 +39,7 @@ class TfNSWAPI {
                 departureTime: event.departureTimePlanned || event.departureTimeEstimated,
                 platform: event.location?.properties?.platform,
                 realtime: event.isRealtimeControlled,
-                delay: event.departureTimeEstimated && event.departureTimePlanned 
+                delay: event.departureTimeEstimated && event.departureTimePlanned
                     ? this.calculateDelay(event.departureTimePlanned, event.departureTimeEstimated)
                     : 0,
                 mode: event.transportation?.product?.class || 'Unknown',
@@ -95,72 +95,72 @@ class TfNSWAPI {
 
     // Map line names to their colors from styles.css
     getLineColor(lineName) {
-        const colorMap = {
+        const varMap = {
             // Rail lines
-            'T1': '#F99D1C',  // T1 North Sydney Line
-            'T2': '#0098CD',  // T2 Bankstown Line
-            'T3': '#F37021',  // T3 Eastern Suburbs & Illawarra Line
-            'T4': '#005AA3',  // T4 Eastern Suburbs & Airport Link
-            'T5': '#C4258F',  // T5 Cumberland Line
-            'T6': '#7C3E21',  // T6 Macarthur Line
-            'T7': '#6F818E',  // T7 Olympic Park Line
-            'T8': '#00954C',  // T8 Airport & South Coast Line
-            'T9': '#D11F2F',  // T9 Northern Line
-            'Hunter': '#833134',
-            'Regional': '#F6891F',
-            'Coaches': '#732A82',
-            
+            'T1': '--t1',
+            'T2': '--t2',
+            'T3': '--t3',
+            'T4': '--t4',
+            'T5': '--t5',
+            'T6': '--t6',
+            'T7': '--t7',
+            'T8': '--t8',
+            'T9': '--t9',
+            'Hunter': '--hunter',
+            'Regional': '--regional',
+            'Coaches': '--coaches',
             // Ferry lines
-            'F1': '#00774B',
-            'F2': '#144734',
-            'F3': '#648C3C',
-            'F4': '#BFD730',
-            'F5': '#286142',
-            'F6': '#00AB51',
-            'F7': '#00B189',
-            'F8': '#55622B',
-            'F9': '#65B32E',
-            'Stockton': '#5AB031',
-            
+            'F1': '--f1',
+            'F2': '--f2',
+            'F3': '--f3',
+            'F4': '--f4',
+            'F5': '--f5',
+            'F6': '--f6',
+            'F7': '--f7',
+            'F8': '--f8',
+            'F9': '--f9',
+            'Stockton': '--stockton',
             // Light Rail lines
-            'L1': '#BE1622',
-            'L2': '#DD1E25',
-            'L3': '#781140',
-            'L4': '#BB2043',
-            'NLR': '#EE343F',
-            
-            // Metro
-            'Metro': '#168388',
-            'SydneyTrains': '#EC6606',
-            'NSWTL': '#DD3F1D',
-            'Bus': '#009ED7',
-            'LightRail': '#E4022D',
-            'Ferry': '#009E4D'
+            'L1': '--l1',
+            'L2': '--l2',
+            'L3': '--l3',
+            'L4': '--l4',
+            'NLR': '--nlr',
+            // Meta
+            'Metro': '--metro',
+            'SydneyTrains': '--sydneytrains',
+            'NSWTL': '--nswtl',
+            'Bus': '--bus',
+            'LightRail': '--lightrail',
+            'Ferry': '--ferry'
         };
 
-        // Try exact match first
-        if (colorMap[lineName]) {
-            return colorMap[lineName];
+        // First try exact match
+        const varName = varMap[lineName];
+        if (varName) {
+            const value = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+            if (value) return value;
         }
 
         // Try partial matches
-        for (const [key, color] of Object.entries(colorMap)) {
+        for (const [key, vname] of Object.entries(varMap)) {
             if (lineName.includes(key) || key.includes(lineName)) {
-                return color;
+                const value = getComputedStyle(document.documentElement).getPropertyValue(vname).trim();
+                if (value) return value;
             }
         }
 
-        // Default color
-        return '#ffa900';
+        // fallback to default orange
+        return getComputedStyle(document.documentElement).getPropertyValue('--orange').trim() || '#ffa900';
     }
 
     // Format time for display
     formatTime(datetime) {
         const date = new Date(datetime);
-        return date.toLocaleTimeString('en-AU', { 
-            hour: '2-digit', 
+        return date.toLocaleTimeString('en-AU', {
+            hour: '2-digit',
             minute: '2-digit',
-            hour12: false 
+            hour12: false
         });
     }
 
@@ -175,21 +175,21 @@ class TfNSWAPI {
     // Extract short line name (T4, F1, L2, etc)
     getShortLineName(lineName) {
         if (!lineName) return 'Unknown';
-        
+
         // Remove spaces and convert to uppercase
         let short = lineName.trim().toUpperCase();
-        
+
         // Extract just the line identifier (T1, F2, L3, etc)
         const match = short.match(/([TFL])(\d+|[A-Z]+)/);
         if (match) {
             return match[1] + match[2];
         }
-        
+
         // Try other patterns
         if (short.includes('METRO')) return 'Metro';
         if (short.includes('BUS')) return short.split(' ')[0];
         if (short.includes('TRAIN')) return 'Train';
-        
+
         // Return first 4 characters if nothing else matches
         return short.substring(0, 4);
     }
@@ -197,25 +197,25 @@ class TfNSWAPI {
     // Extract short platform/stop identifier
     getShortPlatform(platformString) {
         if (!platformString) return '-';
-        
+
         const str = platformString.trim().toUpperCase();
-        
+
         // For bus stops like "Stop A", "Stop B"
         const busMatch = str.match(/STOP\s*([A-Z])/);
         if (busMatch) return busMatch[1];
-        
+
         // For platforms like "Platform 1", "Platform 2"
         const platformMatch = str.match(/PLATFORM\s*(\d+)/);
         if (platformMatch) return platformMatch[1];
-        
+
         // For numbered formats
         const numMatch = str.match(/\d+/);
         if (numMatch) return numMatch[0];
-        
+
         // For letter formats
         const letterMatch = str.match(/[A-Z]/);
         if (letterMatch) return letterMatch[0];
-        
+
         return platformString;
     }
 }
