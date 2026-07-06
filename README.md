@@ -21,5 +21,5 @@ reused and adopted for my design and technology student negotiated project with 
     - [ ] fix scroll bar
     - [ ] show 'last updated' subtext in italics and 24h time
     - [ ] verify claude changes
-- [ ] add assessment information to home page
-    - [ ] link to disclaimer?
+- [x] add assessment information to home page
+- [ ] add site icons

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Departure Board</title>
+    <title>Metro Departure Board</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="/static/css/design/second.css">
 </head>
@@ -11,7 +11,7 @@
     <div class="container">
         <header>
             <a href="/" class="back-link">← Back</a>
-            <h1>Departure Board</h1>
+            <h1>Metro Platform Departure Board</h1>
             <div class="station-info" id="stationInfo" style="display: none;">
                 <span id="stationName"></span>
                 <span id="stationId"></span>
@@ -23,14 +23,6 @@
                 </div>
                 <button id="loadBtn">Load Departures</button>
                 <button id="refreshBtn">Refresh</button>
-                <select id="modeFilter" title="feature not yet available">
-                    <option value="all">All Modes</option>
-                    <option value="train">Train</option>
-                    <option value="bus">Bus</option>
-                    <option value="ferry">Ferry</option>
-                    <option value="lightrail">Light Rail</option>
-                    <option value="metro">Metro</option>
-                </select>
             </div>
             <div class="status" id="status"></div>
         </header>
