@@ -7,9 +7,8 @@ reused and adopted for my design and technology student negotiated project with 
 
 #### project to do list
 - [x] make functionality
-- [ ] make alternative metro design
 - [ ] convert station name to id for search
-- [ ] resolve flask not running in correct environment
+- [x] resolve flask not running in correct environment
 - [ ] make final improvements to modern board
     - [ ] show via text in different size
     - [ ] change display of operator
@@ -23,3 +22,7 @@ reused and adopted for my design and technology student negotiated project with 
     - [ ] verify claude changes
 - [x] add assessment information to home page
 - [ ] add site icons
+- [ ] complete alternative metro board design
+    - [ ] change colours
+    - [ ] change provided information
+- [ ] simplify file layout following claude changes
