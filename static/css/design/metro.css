@@ -1,0 +1,301 @@
+/* Metro departure board specific styles */
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    background: #16213e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0 0 15px 0;
+    color: var(--white);
+    font-size: 2em;
+}
+
+/* Metro-style header - time only in metro teal */
+.header-time {
+    color: var(--metro);
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+}
+
+.station-info {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: var(--white);
+}
+
+#stationName {
+    font-weight: bold;
+}
+
+#stationId {
+    color: var(--l-gray);
+    margin-left: 10px;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--white);
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.search-container {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+
+#stopInput {
+    width: 100%;
+    padding: 10px;
+    background: #0f3460;
+    border: 2px solid var(--white);
+    color: #eee;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+.suggestions-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #0f3460;
+    border: 2px solid var(--white);
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #16213e;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.suggestion-item:hover {
+    background: #16213e;
+}
+
+.stop-name {
+    flex: 1;
+    color: #eee;
+}
+
+.stop-id {
+    color: var(--l-gray);
+    font-size: 0.85em;
+    margin-left: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background: var(--white);
+    border: none;
+    color: #1a1a2e;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button:hover {
+    background: var(--ontime);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.status {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: var(--l-gray);
+    min-height: 20px;
+}
+
+.board {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.board-header {
+    display: grid;
+    grid-template-columns: 80px 100px 1fr 100px;
+    gap: 10px;
+    padding: 15px 20px;
+    background: var(--dark-gray);
+    font-weight: bold;
+    color: var(--white);
+    border-bottom: 2px solid var(--l-gray);
+    text-transform: uppercase;
+}
+
+.departures-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.departure-row {
+    display: grid;
+    grid-template-columns: 80px 100px 1fr 100px;
+    gap: 0 10px;
+    padding: 15px 20px;
+    background: var(--white);
+    color: #000;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 0;
+    animation: fadeIn 0.3s ease;
+}
+
+.departure-row:hover {
+    background: #f5f5f5;
+}
+
+.departure-row .col-time {
+    color: #000;
+    font-weight: bold;
+}
+
+.departure-row .col-line {
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+
+.departure-row .col-destination {
+    color: #000;
+}
+
+.departure-row .col-platform {
+    color: #000;
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.col-time {
+    font-weight: bold;
+    color: var(--white);
+}
+
+.time-mins {
+    display: block;
+    font-size: 1em;
+}
+
+.time-delay {
+    display: block;
+    font-size: 0.85em;
+    margin-top: 2px;
+}
+
+.delay-ontime {
+    color: var(--ontime);
+}
+
+.delay-minor {
+    color: var(--minor);
+}
+
+.delay-major {
+    color: var(--major);
+}
+
+.col-line {
+    font-weight: bold;
+    text-align: center;
+    width: fit-content;
+}
+
+.col-destination {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination-main {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination-info {
+    font-size: 0.8em;
+    color: var(--l-gray);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+    font-style: italic;
+}
+
+.col-platform {
+    text-align: center;
+    color: var(--white);
+}
+
+.no-departures {
+    text-align: center;
+    color: var(--dark-gray);
+    font-style: italic;
+    padding: 20px;
+    margin: 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--l-gray);
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+.loading {
+    color: var(--l-gray);
+    font-style: italic;
+}
+
+.error {
+    color: var(--major);
+}
